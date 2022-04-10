@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lite_chat/screens/nearByFriends.dart';
-import 'package:lite_chat/screens/signInPage.dart';
-import 'package:lite_chat/screens/userProfilePage.dart';
-import 'package:lite_chat/shared/profileAvatar.dart';
+import 'package:lite_chat/core/themes/cubit/theme_switch_cubit.dart';
+import 'package:lite_chat/presentation/screens/near_by_friends_screen/nearByFriends.dart';
+import 'package:lite_chat/presentation/screens/register_screen/signInPage.dart';
+import 'package:lite_chat/presentation/screens/profile_screen/userProfilePage.dart';
+import 'package:lite_chat/presentation/screens/home_screen/widgets/profileAvatar.dart';
+import 'package:lite_chat/core/themes/cubit/theme_switch_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrawerSection extends StatelessWidget {
   const DrawerSection({Key? key}) : super(key: key);
@@ -11,10 +14,11 @@ class DrawerSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: Colors.white,
         gradient: RadialGradient(
           colors: [
-            Color(0xFF434343),
-            Color(0xFF000000),
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.secondary,
           ],
           radius: 5,
           center: Alignment.topCenter,
@@ -31,15 +35,23 @@ class DrawerSection extends StatelessWidget {
               color: Colors.transparent,
               child: Row(
                 children: [
-                  ProfileAvatar(
-                    func: () {
-                      return Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => UserProfilePage()));
-                    },
-                    height: 90,
-                    width: 90,
+                  Container(
+                    alignment: Alignment.center,
+                    height: 92,
+                    width: 92,
+                    padding: EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.grey[400]),
+                    child: ProfileAvatar(
+                      func: () {
+                        return Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserProfilePage()));
+                      },
+                      height: 90,
+                      width: 90,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -83,7 +95,56 @@ class DrawerSection extends StatelessWidget {
             ),
           ),
         ),
-        Divider(thickness: 1),
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: OutlinedButton(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    side:
+                        BorderSide(color: Theme.of(context).primaryColorLight),
+                  ),
+                  child: Text(
+                    "View profile",
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: Theme.of(context).primaryColorLight,
+                        ),
+                  ),
+                ),
+              ),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: BlocBuilder<ThemeSwitchCubit, ThemeSwitchState>(
+                  builder: (context, state) {
+                return IconButton(
+                  padding: const EdgeInsets.only(right: 15),
+                  onPressed: () {
+                    print("theme switched!");
+                    state.themeMode == ThemeMode.dark
+                        ? context
+                            .read<ThemeSwitchCubit>()
+                            .updateAppTheme(toDark: false)
+                        : context
+                            .read<ThemeSwitchCubit>()
+                            .updateAppTheme(toDark: true);
+                  },
+                  splashColor: Colors.grey,
+                  splashRadius: 20,
+                  iconSize: 35,
+                  icon: Icon(state.themeMode == ThemeMode.dark
+                      ? Icons.light_mode
+                      : Icons.dark_mode),
+                );
+              }),
+            )
+          ],
+        ),
+        SizedBox(height: 10),
         buildDrawerList(
             iconData: Icons.chat_bubble,
             title: "Chat",

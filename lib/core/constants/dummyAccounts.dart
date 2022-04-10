@@ -1,4 +1,4 @@
-import 'package:lite_chat/shared/profileAvatar.dart';
+import '../../presentation/screens/home_screen/widgets/profileAvatar.dart';
 
 class DummyAccounts {
   ProfileAvatar profileAvatar = ProfileAvatar();

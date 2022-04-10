@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ProfileAvatar extends StatelessWidget {
-  dynamic func;
-  double height;
-  double width;
-  bool isOnline;
-  double pad;
-  AssetImage? img;
+  final dynamic func;
+  final double height;
+  final double width;
+  final bool isOnline;
+  final double pad;
+  final AssetImage? img;
   ProfileAvatar(
       {this.func,
       this.height = 40,

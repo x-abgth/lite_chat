@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lite_chat/utils/colors.dart';
+import 'package:lite_chat/core/constants/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MsgBubble extends StatelessWidget {
@@ -16,7 +16,10 @@ class MsgBubble extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
             colors: isPrimary
-                ? [kPrimaryColor, kSecondaryColor]
+                ? [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).colorScheme.tertiary
+                  ]
                 : [Color(0xFF1e272c), Color(0xFF1a2228)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

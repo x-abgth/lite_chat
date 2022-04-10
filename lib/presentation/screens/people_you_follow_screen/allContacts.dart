@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../utils/colors.dart';
 
 class AllContacts extends StatelessWidget {
   const AllContacts({Key? key}) : super(key: key);
@@ -8,10 +7,10 @@ class AllContacts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [kPrimaryColor, kSecondaryColor],
-            begin: Alignment.topLeft,
-            end: Alignment.topRight),
+        gradient: LinearGradient(colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).colorScheme.tertiary
+        ], begin: Alignment.topLeft, end: Alignment.topRight),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,

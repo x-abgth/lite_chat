@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lite_chat/main.dart';
-import 'package:lite_chat/screens/signInPage.dart';
-import 'package:lite_chat/utils/colors.dart';
+import 'package:lite_chat/presentation/screens/register_screen/signInPage.dart';
+import '../../../core/constants/colors.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
@@ -10,10 +10,10 @@ class SignUpPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [kPrimaryColor, kSecondaryColor],
-            begin: Alignment.topLeft,
-            end: Alignment.centerRight),
+        gradient: LinearGradient(colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).colorScheme.tertiary
+        ], begin: Alignment.topLeft, end: Alignment.centerRight),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -39,7 +39,7 @@ class SignUpPage extends StatelessWidget {
               child: Text("Sign Up"),
               style: TextButton.styleFrom(
                   backgroundColor: Colors.white,
-                  primary: kPrimaryColor,
+                  primary: Theme.of(context).primaryColor,
                   shape: StadiumBorder(),
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15)),
             ),

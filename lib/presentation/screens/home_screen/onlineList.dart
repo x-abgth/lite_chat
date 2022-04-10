@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lite_chat/shared/profileAvatar.dart';
-import 'package:lite_chat/utils/dummyAccounts.dart';
+import 'widgets/profileAvatar.dart';
+import '../../../core/constants/dummyAccounts.dart';
 
 class OnlineList extends StatelessWidget {
-  List<DummyAccounts> _onlineUser = [
+  final List<DummyAccounts> _onlineUser = [
     DummyAccounts(
         profileAvatar: ProfileAvatar(func: () {}, isOnline: true),
         msgs: "",

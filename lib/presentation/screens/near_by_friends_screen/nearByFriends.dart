@@ -1,12 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:lite_chat/shared/profileAvatar.dart';
-import 'package:lite_chat/utils/colors.dart';
-import 'package:lite_chat/utils/dummyAccounts.dart';
+import '../home_screen/widgets/profileAvatar.dart';
+import '../../../core/constants/colors.dart';
+import '../../../core/constants/dummyAccounts.dart';
 
 class NearByFirends extends StatelessWidget {
-  List<DummyAccounts> _frnds = [
+  final List<DummyAccounts> _frnds = [
     DummyAccounts(
         profileAvatar: ProfileAvatar(
           isOnline: true,
@@ -24,7 +22,7 @@ class NearByFirends extends StatelessWidget {
         time: "",
         username: "_john"),
   ];
-  List<DummyAccounts> _others = [
+  final List<DummyAccounts> _others = [
     DummyAccounts(
         profileAvatar: ProfileAvatar(
           isOnline: true,
@@ -48,10 +46,10 @@ class NearByFirends extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [kPrimaryColor, kSecondaryColor],
-            begin: Alignment.topLeft,
-            end: Alignment.topRight),
+        gradient: LinearGradient(colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).colorScheme.tertiary
+        ], begin: Alignment.topLeft, end: Alignment.topRight),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -65,8 +63,8 @@ class NearByFirends extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: [
-                Color(0xFF434343),
-                Color(0xFF000000),
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
               ],
               radius: 5,
               center: Alignment.topCenter,
@@ -92,9 +90,10 @@ class NearByFirends extends StatelessWidget {
                           onPressed: () {},
                           child: Text("Following"),
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: Colors.white),
+                            side: BorderSide(
+                                color: Theme.of(context).primaryColorLight),
                             backgroundColor: Colors.transparent,
-                            primary: Colors.white,
+                            primary: Theme.of(context).primaryColorLight,
                             padding: EdgeInsets.symmetric(horizontal: 30),
                             shape: StadiumBorder(),
                           ),
@@ -119,7 +118,8 @@ class NearByFirends extends StatelessWidget {
                             onPressed: () {},
                             child: Text("Follow"),
                             style: TextButton.styleFrom(
-                              backgroundColor: kSecondaryColor,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.tertiary,
                               primary: Colors.white,
                               padding: EdgeInsets.symmetric(horizontal: 30),
                               shape: StadiumBorder(),

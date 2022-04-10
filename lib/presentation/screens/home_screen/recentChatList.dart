@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lite_chat/screens/chatScreen.dart';
-import 'package:lite_chat/shared/profileAvatar.dart';
-import 'package:lite_chat/utils/dummyAccounts.dart';
+import 'package:lite_chat/presentation/screens/chat_screen/chatScreen.dart';
+import 'widgets/profileAvatar.dart';
+import '../../../core/constants/dummyAccounts.dart';
 
 class RecentChatList extends StatelessWidget {
-  List<DummyAccounts> _users = [
+  final List<DummyAccounts> _users = [
     DummyAccounts(
         profileAvatar: ProfileAvatar(func: () {}),
         msgs: "AAahhm",

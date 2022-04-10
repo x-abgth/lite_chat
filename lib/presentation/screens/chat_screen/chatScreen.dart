@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lite_chat/shared/profileAvatar.dart';
-import 'package:lite_chat/utils/colors.dart';
-import 'package:lite_chat/utils/msgBubble.dart';
+import '../home_screen/widgets/profileAvatar.dart';
+import '../../../core/constants/msgBubble.dart';
 
 class ChatScreen extends StatelessWidget {
-  List<MsgBubble> _demoChats = [
+  final List<MsgBubble> _demoChats = [
     MsgBubble(msg: "Hi", time: "4:50 PM"),
     MsgBubble(msg: "Hi 👋", isPrimary: false, time: "4:56 PM"),
     MsgBubble(msg: "How Are you?", time: "4:58 PM"),
@@ -17,10 +16,10 @@ class ChatScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [kPrimaryColor, kSecondaryColor],
-            begin: Alignment.topLeft,
-            end: Alignment.topRight),
+        gradient: LinearGradient(colors: [
+          Theme.of(context).primaryColor,
+          Theme.of(context).colorScheme.tertiary
+        ], begin: Alignment.topLeft, end: Alignment.topRight),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -59,8 +58,8 @@ class ChatScreen extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: [
-                Color(0xFF434343),
-                Color(0xFF000000),
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
               ],
               radius: 5,
               center: Alignment.topCenter,
@@ -95,10 +94,10 @@ class ChatScreen extends StatelessWidget {
                         margin: EdgeInsets.only(right: 5),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                              colors: [kPrimaryColor, kSecondaryColor],
-                              begin: Alignment.topLeft,
-                              end: Alignment.topRight),
+                          gradient: LinearGradient(colors: [
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).colorScheme.tertiary
+                          ], begin: Alignment.topLeft, end: Alignment.topRight),
                         ),
                         child: IconButton(
                             onPressed: () {},
@@ -106,18 +105,19 @@ class ChatScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: TextField(
-                          cursorColor: Colors.white,
+                          cursorColor: Theme.of(context).colorScheme.tertiary,
+                          cursorHeight: 25,
                           decoration: InputDecoration(
                             hintText: "Type something",
-                            hintStyle: TextStyle(color: Colors.white24),
+                            hintStyle: TextStyle(color: Color(0xFF707070)),
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.white10, width: 2),
+                              borderSide: BorderSide(
+                                  color: Color(0xFF707070), width: 2),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white10, width: 2),
+                                borderSide: BorderSide(
+                                    color: Color(0xFF707070), width: 2),
                                 borderRadius: BorderRadius.circular(20)),
                           ),
                         ),
@@ -127,7 +127,8 @@ class ChatScreen extends StatelessWidget {
                         height: 40,
                         margin: EdgeInsets.only(left: 5),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: kPrimaryColor),
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).primaryColor),
                         child: IconButton(
                             onPressed: () {},
                             icon: Icon(Icons.send, color: Colors.white60)),
