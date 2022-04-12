@@ -32,7 +32,7 @@ class ProfileAvatar extends StatelessWidget {
                 )),
           ),
           Positioned(
-            bottom: 0.5,
+            bottom: 0,
             right: 2,
             child: isOnline
                 ? CircleAvatar(

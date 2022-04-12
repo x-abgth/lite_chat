@@ -39,11 +39,12 @@ class AppTheme {
     ),
     appBarTheme: AppBarTheme()
         .copyWith(foregroundColor: Colors.white, backgroundColor: primaryColor),
-    textTheme: TextTheme().copyWith(
+    textTheme: TextTheme(
       headline1: TextStyle(color: lightTextColor),
       headline6: TextStyle(color: lightTextColor),
       bodyText1: TextStyle(color: lightTextColor),
       bodyText2: TextStyle(color: lightTextColor),
+      caption: TextStyle(color: lightTextColor),
       subtitle1: TextStyle(color: lightSubTextColor),
       subtitle2: TextStyle(color: lightSubTextColor),
     ),
@@ -62,11 +63,12 @@ class AppTheme {
         ),
     appBarTheme: AppBarTheme()
         .copyWith(foregroundColor: Colors.white, backgroundColor: primaryColor),
-    textTheme: TextTheme().copyWith(
+    textTheme: TextTheme(
       headline1: TextStyle(color: darkSurfaceColor),
       headline6: TextStyle(color: darkSurfaceColor),
       bodyText1: TextStyle(color: darkSurfaceColor),
       bodyText2: TextStyle(color: darkSurfaceColor),
+      caption: TextStyle(color: darkSurfaceColor),
       subtitle1: TextStyle(color: darkSubTextColor),
       subtitle2: TextStyle(color: darkSubTextColor),
     ),
