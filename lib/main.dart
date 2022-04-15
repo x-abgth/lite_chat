@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:lite_chat/core/themes/app_theme.dart';
 import 'package:lite_chat/core/themes/cubit/theme_switch_cubit.dart';
+import 'package:lite_chat/data/services/firebase_auth.dart';
+import 'package:lite_chat/presentation/screens/chat_screen/chatScreen.dart';
+import 'package:lite_chat/presentation/screens/near_by_friends_screen/nearByFriends.dart';
 import 'package:lite_chat/presentation/screens/people_you_follow_screen/allContacts.dart';
 import 'package:lite_chat/presentation/screens/home_screen/onlineList.dart';
 import 'package:lite_chat/presentation/screens/home_screen/recentChatList.dart';
 import 'package:lite_chat/presentation/screens/home_screen/widgets/drawerSection.dart';
 import 'package:lite_chat/presentation/screens/home_screen/widgets/profileAvatar.dart';
+import 'package:lite_chat/presentation/screens/profile_screen/userProfilePage.dart';
+import 'package:lite_chat/presentation/screens/register_screen/signInPage.dart';
+import 'package:lite_chat/presentation/screens/splash_screen/splash_screen.dart';
 
-void main() {
+import 'presentation/screens/register_screen/signUpPage.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -23,14 +35,14 @@ class MyApp extends StatelessWidget {
           create: (context) => ThemeSwitchCubit(),
         ),
       ],
-      child: MyHomePage(),
+      child: MyAppMaterial(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+class MyAppMaterial extends StatelessWidget {
+  MyAppMaterial({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,25 +52,62 @@ class MyHomePage extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: context
           .select((ThemeSwitchCubit themeCubit) => themeCubit.state.themeMode),
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          key: _scaffoldKey,
-          backgroundColor: Colors.transparent,
-          drawer: Drawer(
-            child: DrawerSection(),
-          ),
-          body: NestedScrollView(
-            headerSliverBuilder: (context, scroll) {
-              return [
-                homePageAppBarMethod(context),
-              ];
-            },
-            body: HomeBody(),
-          ),
-        ),
-      ),
+      home: HomePage(),
     );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final FirebaseAuthMethods firebaseAuthMethods = FirebaseAuthMethods();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: firebaseAuthMethods.checkAuthentication(context),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          print("***********Snapshot.data = ${snapshot.data}*************");
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SplashScreen();
+          } else {
+            return DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                key: _scaffoldKey,
+                backgroundColor: Colors.transparent,
+                drawer: Drawer(
+                  child: DrawerSection(),
+                ),
+                body: NestedScrollView(
+                  headerSliverBuilder: (context, scroll) {
+                    return [
+                      homePageAppBarMethod(context),
+                    ];
+                  },
+                  body: Container(
+                    decoration: BoxDecoration(
+                      gradient: RadialGradient(
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary,
+                        ],
+                        radius: 5,
+                        center: Alignment.topCenter,
+                      ),
+                    ),
+                    child: TabBarView(children: [
+                      RecentChatList(),
+                      OnlineList(),
+                    ]),
+                  ),
+                ),
+              ),
+            );
+          }
+          // else {
+          //   return SignInPage();
+          // }
+        });
   }
 
   // HomePage AppBar functions
@@ -120,49 +169,6 @@ class MyHomePage extends StatelessWidget {
           Tab(text: "Online"),
         ],
       ),
-    );
-  }
-
-  // Button to open app drawer from the side
-  Widget buildMenuBt({required BuildContext context}) {
-    return GestureDetector(
-      onTap: () {
-        _scaffoldKey.currentState!.openDrawer();
-      },
-      child: Container(
-        height: 40,
-        width: 40,
-        margin: EdgeInsets.only(left: 10),
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: AssetImage("assets/default-avatar.jpg"),
-            )),
-      ),
-    );
-  }
-}
-
-class HomeBody extends StatelessWidget {
-  const HomeBody({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: RadialGradient(
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.secondary,
-          ],
-          radius: 5,
-          center: Alignment.topCenter,
-        ),
-      ),
-      child: TabBarView(children: [
-        RecentChatList(),
-        OnlineList(),
-      ]),
     );
   }
 }

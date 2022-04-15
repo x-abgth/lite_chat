@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "140000742886",
-    "project_id": "litechat-4b93b",
-    "storage_bucket": "litechat-4b93b.appspot.com"
+    "project_number": "1030787020577",
+    "project_id": "lite-chat-18b0e",
+    "storage_bucket": "lite-chat-18b0e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:140000742886:android:424c8cad0f5ed21bdd1a27",
+        "mobilesdk_app_id": "1:1030787020577:android:08cf7c4193b80200343060",
         "android_client_info": {
-          "package_name": "com.portfolio_project.lite_chat"
+          "package_name": "com.example.lite_chat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "140000742886-v668matb59kunc52ce5sfvmc7irj27ue.apps.googleusercontent.com",
+          "client_id": "1030787020577-hpodmjk05rol2t87r8hlfg99v1quth12.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBFXp5RyVqHnPsTVOGk1pwbTU8f86t1F5g"
+          "current_key": "AIzaSyAit4Z3-7zp31QK2TGycS-oMTogTum3-1Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "140000742886-v668matb59kunc52ce5sfvmc7irj27ue.apps.googleusercontent.com",
+              "client_id": "1030787020577-hpodmjk05rol2t87r8hlfg99v1quth12.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

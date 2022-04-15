@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lite_chat/core/themes/cubit/theme_switch_cubit.dart';
+import 'package:lite_chat/data/services/firebase_auth.dart';
+import 'package:lite_chat/main.dart';
 import 'package:lite_chat/presentation/screens/near_by_friends_screen/nearByFriends.dart';
 import 'package:lite_chat/presentation/screens/register_screen/signInPage.dart';
 import 'package:lite_chat/presentation/screens/profile_screen/userProfilePage.dart';
@@ -8,7 +10,8 @@ import 'package:lite_chat/presentation/screens/home_screen/widgets/profileAvatar
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrawerSection extends StatelessWidget {
-  const DrawerSection({Key? key}) : super(key: key);
+  DrawerSection({Key? key}) : super(key: key);
+  final firebaseAuthMethods = FirebaseAuthMethods();
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +130,9 @@ class DrawerSection extends StatelessWidget {
               iconData: Icons.exit_to_app,
               title: "Sign Out",
               action: () {
+                firebaseAuthMethods.logout();
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => SignInPage()));
+                    MaterialPageRoute(builder: (context) => HomePage()));
               }),
         ]),
       ),

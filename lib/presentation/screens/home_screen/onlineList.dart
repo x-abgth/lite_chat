@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/profileAvatar.dart';
 import '../../../core/constants/dummyAccounts.dart';
+import 'package:like_button/like_button.dart';
 
 class OnlineList extends StatelessWidget {
   final List<DummyAccounts> _onlineUser = [
@@ -38,7 +39,17 @@ class OnlineList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: ListTile(
                 leading: _onlineUser[index].profileAvatar,
-                title: Text(_onlineUser[index].username),
+                title: Text(_onlineUser[index].username,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontSize: 16)),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    LikeButton(),
+                  ],
+                ),
                 onTap: () {},
               ),
             ),
