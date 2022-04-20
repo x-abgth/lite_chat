@@ -8,7 +8,7 @@ class AuthInputs {
   static InputDecoration inputDecoration(
       {required IconData icon, String label = ""}) {
     return InputDecoration(
-      icon: Icon(icon, color: Colors.white70),
+      prefixIcon: Icon(icon, color: Colors.white70),
       labelText: label,
       labelStyle: TextStyle(color: Colors.white70),
       enabledBorder: OutlineInputBorder(

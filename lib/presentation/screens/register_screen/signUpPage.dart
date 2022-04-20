@@ -1,34 +1,61 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:lite_chat/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lite_chat/data/services/firebase_auth.dart';
-import 'package:lite_chat/presentation/screens/register_screen/signInPage.dart';
 import 'package:lite_chat/presentation/screens/register_screen/widgets/text_input_decoration.dart';
 
-import '../../../main.dart';
-
 class SignUpPage extends StatefulWidget {
+  final VoidCallback onClickedSignUp;
+
+  SignUpPage({required this.onClickedSignUp});
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthMethods firebaseAuthMethods = FirebaseAuthMethods();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordController1 = TextEditingController();
+  TextEditingController passwordController2 = TextEditingController();
+
+  late bool passwordObscured1;
+  late bool passwordObscured2;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordObscured1 = false;
+    passwordObscured2 = false;
+  }
 
   signMeUp() {
-    dynamic user = "";
-    if (formKey.currentState!.validate()) {
-      user = firebaseAuthMethods.createUser(
-          emailController.text, passwordController.text);
-      print(user);
-      if (user != "")
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-    }
+    final isValid = formKey.currentState!.validate();
+    // dynamic user = "";
+    if (!isValid) return;
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: CircularProgressIndicator(),
+            ));
+    firebaseAuthMethods.createUser(
+        nameController.text, emailController.text, passwordController2.text);
+
+    navigatorKey.currentState!.pop();
+    // print("//////${user.toString()}////////////");
+
+    // if (user != "") {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => ValidateEmail()));
+    // } else {
+    //   Navigator.pushReplacement(
+    //       context, MaterialPageRoute(builder: (context) => HomePage()));
+    // }
   }
 
   @override
@@ -43,6 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ], begin: Alignment.topLeft, end: Alignment.centerRight),
         ),
         child: Scaffold(
+          key: scaffoldKey,
           backgroundColor: Colors.transparent,
           body: Container(
             width: size.width,
@@ -78,6 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         label: "E-Mail",
                         icon: Icons.mail,
                         controller: emailController,
+                        textInputType: TextInputType.emailAddress,
                         validate: (val) {
                           return RegExp(
                                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -85,19 +114,105 @@ class _SignUpPageState extends State<SignUpPage> {
                               ? null
                               : "Enter a valid email address";
                         }),
-                    buildTextFields(
-                        label: "Password",
-                        icon: Icons.lock,
-                        controller: passwordController,
-                        isPass: true,
-                        validate: (val) {
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10),
+                      child: TextFormField(
+                        controller: passwordController1,
+                        obscureText: !passwordObscured1,
+                        cursorColor: Colors.white,
+                        textInputAction: TextInputAction.next,
+                        style: AuthInputs.inputStyle(),
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock, color: Colors.white70),
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordObscured1
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            color: Colors.white60,
+                            onPressed: () => setState(() {
+                              passwordObscured1 = !passwordObscured1;
+                            }),
+                          ),
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.white70),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2),
+                              borderRadius: BorderRadius.circular(30)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2),
+                              borderRadius: BorderRadius.circular(30)),
+                          errorBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2),
+                              borderRadius: BorderRadius.circular(30)),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2),
+                              borderRadius: BorderRadius.circular(30)),
+                        ),
+                        validator: (val) {
                           return val!.length < 6
-                              ? "Password must be atleast 6 characters"
+                              ? "Password must be at least 6 characters"
                               : null;
-                        }),
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10),
+                      child: TextFormField(
+                          controller: passwordController2,
+                          obscureText: !passwordObscured2,
+                          cursorColor: Colors.white,
+                          textInputAction: TextInputAction.done,
+                          style: AuthInputs.inputStyle(),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock, color: Colors.white70),
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordObscured2
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              color: Colors.white60,
+                              onPressed: () => setState(() {
+                                passwordObscured2 = !passwordObscured2;
+                              }),
+                            ),
+                            labelText: "Confirm Password",
+                            labelStyle: TextStyle(color: Colors.white70),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 2),
+                                borderRadius: BorderRadius.circular(30)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 2),
+                                borderRadius: BorderRadius.circular(30)),
+                            errorBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.red, width: 2),
+                                borderRadius: BorderRadius.circular(30)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.red, width: 2),
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
+                          validator: (val) {
+                            if (val != passwordController1.text) {
+                              return "Passwords do not match";
+                            } else if (val!.length < 6) {
+                              return "Password must be at least 6 characters";
+                            } else {
+                              return null;
+                            }
+                          }),
+                    ),
                     SizedBox(height: 20),
                     TextButton(
                       onPressed: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
                         signMeUp();
                       },
                       child: Text("Sign Up"),
@@ -112,26 +227,21 @@ class _SignUpPageState extends State<SignUpPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        GestureDetector(
-                          child: RichText(
-                            text: TextSpan(
-                              text: "Already have an account? ",
-                              style: TextStyle(color: Colors.white),
-                              children: [
-                                TextSpan(
-                                  text: "Login",
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.white),
-                                )
-                              ],
-                            ),
+                        RichText(
+                          text: TextSpan(
+                            text: "Already have an account? ",
+                            style: TextStyle(color: Colors.white),
+                            children: [
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = widget.onClickedSignUp,
+                                text: "Login",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.white),
+                              )
+                            ],
                           ),
-                          onTap: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => SignInPage()));
-                          },
                         ),
                       ],
                     )
@@ -145,18 +255,21 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Padding buildTextFields(
-      {required String label,
-      required IconData icon,
-      required TextEditingController controller,
-      required String? Function(String?) validate,
-      bool isPass = false}) {
+  Padding buildTextFields({
+    required String label,
+    required IconData icon,
+    required TextEditingController controller,
+    required String? Function(String?) validate,
+    TextInputType textInputType = TextInputType.text,
+    TextInputAction textInputAction = TextInputAction.next,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
       child: TextFormField(
         controller: controller,
-        obscureText: isPass,
         cursorColor: Colors.white,
+        keyboardType: textInputType,
+        textInputAction: textInputAction,
         style: AuthInputs.inputStyle(),
         decoration: AuthInputs.inputDecoration(icon: icon, label: label),
         validator: validate,
@@ -168,7 +281,8 @@ class _SignUpPageState extends State<SignUpPage> {
   void dispose() {
     nameController.dispose();
     emailController.dispose();
-    passwordController.dispose();
+    passwordController1.dispose();
+    passwordController2.dispose();
     super.dispose();
   }
 }

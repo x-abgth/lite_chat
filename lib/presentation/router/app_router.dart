@@ -1,24 +1,24 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-import '../../core/constants/strings.dart';
-import '../../core/exceptions/route_exception.dart';
-import '../screens/home_screen/home_screen.dart';
+// import '../../core/constants/strings.dart';
+// import '../../core/exceptions/route_exception.dart';
+// import '../screens/home_screen/home_screen.dart';
 
-class AppRouter {
-  static const String home = '/';
+// class AppRouter {
+//   static const String home = '/';
 
-  const AppRouter._();
+//   const AppRouter._();
 
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case home:
-        return MaterialPageRoute(
-          builder: (_) => HomeScreen(
-            title: Strings.homeScreenTitle,
-          ),
-        );
-      default:
-        throw const RouteException('Route not found!');
-    }
-  }
-}
+//   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+//     switch (settings.name) {
+//       case home:
+//         return MaterialPageRoute(
+//           builder: (_) => HomeScreen(
+//             title: Strings.homeScreenTitle,
+//           ),
+//         );
+//       default:
+//         throw const RouteException('Route not found!');
+//     }
+//   }
+// }

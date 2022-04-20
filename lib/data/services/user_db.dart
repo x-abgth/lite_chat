@@ -1,0 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class UserDb {
+  String userId;
+
+  UserDb({required this.userId});
+
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("Users");
+
+  // Adds data to database
+  Future updateUserData(
+      {String username = "",
+      required String emailId,
+      required String displayName,
+      int noOfPeopleLikedUser = 0,
+      String about = "",
+      String gender = "",
+      String phoneNo = "",
+      String dob = ""}) async {
+    print("save emaild id to firestore : $emailId");
+    userCollection.doc(userId).set({
+      'username': username,
+      'displayName': displayName,
+      'noOfPeopleLikedUser': noOfPeopleLikedUser,
+      'emailId': emailId,
+      'gender': gender,
+      'dob': dob,
+      'phoneNo': phoneNo,
+      'about': about,
+    });
+  }
+
+  // Get datas from database
+  Stream<QuerySnapshot> get users {
+    return userCollection.snapshots();
+  }
+}

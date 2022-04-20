@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../home_screen/widgets/profileAvatar.dart';
-import '../../../core/constants/colors.dart';
 import '../../../core/constants/dummyAccounts.dart';
 
 class NearByFirends extends StatelessWidget {

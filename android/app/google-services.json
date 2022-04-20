@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1030787020577:android:08cf7c4193b80200343060",
+        "mobilesdk_app_id": "1:1030787020577:android:edaaa40c2dc6b892343060",
         "android_client_info": {
-          "package_name": "com.example.lite_chat"
+          "package_name": "com.portfolio_project.lite_chat"
         }
       },
       "oauth_client": [

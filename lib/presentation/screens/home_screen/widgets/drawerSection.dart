@@ -4,7 +4,6 @@ import 'package:lite_chat/core/themes/cubit/theme_switch_cubit.dart';
 import 'package:lite_chat/data/services/firebase_auth.dart';
 import 'package:lite_chat/main.dart';
 import 'package:lite_chat/presentation/screens/near_by_friends_screen/nearByFriends.dart';
-import 'package:lite_chat/presentation/screens/register_screen/signInPage.dart';
 import 'package:lite_chat/presentation/screens/profile_screen/userProfilePage.dart';
 import 'package:lite_chat/presentation/screens/home_screen/widgets/profileAvatar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,7 +131,7 @@ class DrawerSection extends StatelessWidget {
               action: () {
                 firebaseAuthMethods.logout();
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                    MaterialPageRoute(builder: (context) => MainPage()));
               }),
         ]),
       ),
