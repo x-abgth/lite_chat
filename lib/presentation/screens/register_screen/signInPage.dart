@@ -2,8 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lite_chat/presentation/screens/register_screen/widgets/text_input_decoration.dart';
-
-import '../../../data/services/firebase_auth.dart';
+import '../../../data/repositories/firebase_auth_repository.dart';
 
 class SignInPage extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -19,7 +18,7 @@ class _SignInPageState extends State<SignInPage> {
   final resetFormKey = GlobalKey<FormState>();
   final scaffoldState = GlobalKey<ScaffoldState>();
 
-  final FirebaseAuthMethods firebaseAuthMethods = FirebaseAuthMethods();
+  final FirebaseAuthRepository firebaseAuthMethods = FirebaseAuthRepository();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController resetEmailController = TextEditingController();
@@ -33,19 +32,10 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   signMeIn(BuildContext context) {
-    // dynamic user = "";
     if (formKey.currentState!.validate()) {
       firebaseAuthMethods.signInWithEmailAndPassword(
           emailController.text, passwordController.text);
       passwordController.clear();
-
-      // if (user != "") if (firebaseAuthMethods.emailVerified()) {
-      //   Navigator.pushReplacement(
-      //       context, MaterialPageRoute(builder: (context) => HomePage()));
-      // } else {
-      //   Navigator.pushReplacement(
-      //       context, MaterialPageRoute(builder: (context) => ValidateEmail()));
-      // }
     }
   }
 

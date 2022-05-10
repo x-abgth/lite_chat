@@ -1,36 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lite_chat/data/services/user_db.dart';
+import 'package:lite_chat/data/repositories/user_db.dart';
 
-class FirebaseAuthMethods {
+class FirebaseAuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Checks if user is signed in or not
-  Stream<User?> checkAuthentication(BuildContext context) {
+  Stream<User?> checkAuthentication() {
     return _auth.authStateChanges();
   }
-
-  // // Sends email verification link
-  // Future sendEmailVerification() async {
-  //   if (_auth.currentUser != null)
-  //     await _auth.currentUser!.sendEmailVerification();
-  // }
-
-  // // returns true/ false according email verification.
-  // bool emailVerified() {
-  //   reloadUser();
-  //   return _auth.currentUser!.emailVerified;
-  // }
-
-  // // reloads user
-  // Future reloadUser() async {
-  //   try {
-  //     await _auth.currentUser!.reload();
-  //   } catch (e) {
-  //     print("ERROR: $e");
-  //   }
-  // }
 
   // call this when new user is created
   Future createUser(String name, String email, String password) async {
@@ -77,12 +55,28 @@ class FirebaseAuthMethods {
     }
   }
 
+  // checking if email is verified or not
+  Future<bool> checkEmailVerified() async {
+    await _auth.currentUser!.reload();
+    return _auth.currentUser!.emailVerified;
+  }
+
+  // Send verification email link
+  Future sendVerificationEmail() async {
+    final user = FirebaseAuth.instance.currentUser!;
+    await user.sendEmailVerification();
+  }
+
   // call this when user forgot password
   Future resetPassword(String email) async {
     try {
       return await _auth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException {
-      return null;
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(
+        msg: e.message ?? "",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_LONG,
+      );
     }
   }
 
@@ -91,7 +85,12 @@ class FirebaseAuthMethods {
     try {
       _auth.signOut();
       return true;
-    } on FirebaseAuthException {
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(
+        msg: e.message ?? "",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_LONG,
+      );
       return false;
     }
   }

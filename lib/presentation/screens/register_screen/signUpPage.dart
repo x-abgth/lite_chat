@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_chat/main.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lite_chat/data/services/firebase_auth.dart';
+import 'package:lite_chat/data/repositories/firebase_auth_repository.dart';
 import 'package:lite_chat/presentation/screens/register_screen/widgets/text_input_decoration.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final FirebaseAuthMethods firebaseAuthMethods = FirebaseAuthMethods();
+  final FirebaseAuthRepository firebaseAuthMethods = FirebaseAuthRepository();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -35,7 +35,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   signMeUp() {
     final isValid = formKey.currentState!.validate();
-    // dynamic user = "";
     if (!isValid) return;
     showDialog(
         context: context,
@@ -47,15 +46,6 @@ class _SignUpPageState extends State<SignUpPage> {
         nameController.text, emailController.text, passwordController2.text);
 
     navigatorKey.currentState!.pop();
-    // print("//////${user.toString()}////////////");
-
-    // if (user != "") {
-    //   Navigator.pushReplacement(
-    //       context, MaterialPageRoute(builder: (context) => ValidateEmail()));
-    // } else {
-    //   Navigator.pushReplacement(
-    //       context, MaterialPageRoute(builder: (context) => HomePage()));
-    // }
   }
 
   @override

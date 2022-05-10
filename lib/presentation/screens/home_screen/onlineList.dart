@@ -14,7 +14,7 @@ class OnlineList extends StatelessWidget {
         profileAvatar: ProfileAvatar(
           func: () {},
           isOnline: true,
-          img: AssetImage("assets/moto_psych.jpg"),
+          img: AssetImage("assets/images/moto_psych.jpg"),
         ),
         msgs: "",
         time: "",

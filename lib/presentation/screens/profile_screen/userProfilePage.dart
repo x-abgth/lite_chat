@@ -23,7 +23,7 @@ class UserProfilePage extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: Image(
-                      image: AssetImage("assets/default-avatar.jpg"),
+                      image: AssetImage("assets/images/default-avatar.jpg"),
                       fit: BoxFit.cover,
                     ),
                   ),

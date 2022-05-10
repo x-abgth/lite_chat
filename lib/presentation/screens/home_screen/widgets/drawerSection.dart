@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lite_chat/core/themes/cubit/theme_switch_cubit.dart';
-import 'package:lite_chat/data/services/firebase_auth.dart';
+import 'package:lite_chat/data/repositories/firebase_auth_repository.dart';
 import 'package:lite_chat/main.dart';
 import 'package:lite_chat/presentation/screens/near_by_friends_screen/nearByFriends.dart';
 import 'package:lite_chat/presentation/screens/profile_screen/userProfilePage.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrawerSection extends StatelessWidget {
   DrawerSection({Key? key}) : super(key: key);
-  final firebaseAuthMethods = FirebaseAuthMethods();
+  final firebaseAuthMethods = FirebaseAuthRepository();
 
   @override
   Widget build(BuildContext context) {

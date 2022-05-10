@@ -26,7 +26,7 @@ dependencies:
   # fonts and icons
   google_fonts: ^2.1.0
   font_awesome_flutter: ^9.1.0
-  # bloc helpers
+  # state management
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
   # functionality / featrures related
@@ -64,7 +64,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -18,9 +18,12 @@ class UserDb {
       String gender = "",
       String phoneNo = "",
       String dob = ""}) async {
+    List<String> trimmedEmail = [];
+    trimmedEmail = emailId.split('@');
+    trimmedEmail = trimmedEmail[0].split('+');
     print("save emaild id to firestore : $emailId");
     userCollection.doc(userId).set({
-      'username': username,
+      'username': username == "" ? trimmedEmail[0] : username,
       'displayName': displayName,
       'noOfPeopleLikedUser': noOfPeopleLikedUser,
       'emailId': emailId,

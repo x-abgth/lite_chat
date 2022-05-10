@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lite_chat/core/themes/app_theme.dart';
 import 'package:lite_chat/core/themes/cubit/theme_switch_cubit.dart';
-import 'package:lite_chat/data/services/firebase_auth.dart';
+import 'package:lite_chat/data/repositories/firebase_auth_repository.dart';
+import 'package:lite_chat/logic/blocs/email_validation_bloc/email_validation_bloc.dart';
 import 'package:lite_chat/presentation/screens/register_screen/auth_page.dart';
 import 'package:lite_chat/presentation/screens/register_screen/validate_email.dart';
 import 'package:lite_chat/presentation/screens/splash_screen/splash_screen.dart';
@@ -14,26 +15,30 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<FirebaseAuthRepository>(
+            create: (context) => FirebaseAuthRepository()),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeSwitchCubit>(
+            create: (context) => ThemeSwitchCubit(),
+          ),
+          BlocProvider<EmailValidationBloc>(
+              create: (context) => EmailValidationBloc(
+                  firebaseAuthRepository:
+                      RepositoryProvider.of<FirebaseAuthRepository>(context))),
+        ],
+        child: MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<ThemeSwitchCubit>(
-          create: (context) => ThemeSwitchCubit(),
-        ),
-      ],
-      child: MyAppMaterial(),
-    );
-  }
-}
-
-class MyAppMaterial extends StatelessWidget {
-  MyAppMaterial({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +56,14 @@ class MyAppMaterial extends StatelessWidget {
 }
 
 class MainPage extends StatelessWidget {
-  final FirebaseAuthMethods firebaseAuthMethods = FirebaseAuthMethods();
+  final FirebaseAuthRepository firebaseAuthMethods = FirebaseAuthRepository();
 
   @override
   Widget build(BuildContext context) {
+    print(firebaseAuthMethods.checkAuthentication());
     return StreamBuilder<User?>(
-        stream: firebaseAuthMethods.checkAuthentication(context),
+        stream: FirebaseAuth.instance
+            .authStateChanges(), // getting directly from backend
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return SplashScreen();

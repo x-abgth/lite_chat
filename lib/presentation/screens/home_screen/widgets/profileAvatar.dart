@@ -28,7 +28,7 @@ class ProfileAvatar extends StatelessWidget {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: img ?? AssetImage("assets/default-avatar.jpg"),
+                  image: img ?? AssetImage("assets/images/default-avatar.jpg"),
                 )),
           ),
           Positioned(
