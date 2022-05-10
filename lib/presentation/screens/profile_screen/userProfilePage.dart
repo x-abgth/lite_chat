@@ -111,7 +111,7 @@ class UserProfilePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildDetailedFields(context, "Phone", "7907261299"),
+                buildDetailedFields(context, "Phone", "9876543210"),
                 SizedBox(width: 15),
                 buildDetailedFields(
                     context, "E - Mail", "abhijithak683@gmail.com"),
