@@ -97,7 +97,9 @@ class _ValidateEmailState extends State<ValidateEmail> {
                         Text(
                           "lite chat",
                           style: GoogleFonts.dancingScript(
-                              fontSize: 50, fontWeight: FontWeight.bold),
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                       ],
                     ),
@@ -112,12 +114,15 @@ class _ValidateEmailState extends State<ValidateEmail> {
                           "A verification link has been sent your email address.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.white),
                         ),
                         SizedBox(height: 5),
                         Text(
                           "Please click on the link that has just been sent to your email account to verify your email and continue the registration process.",
                           textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white),
                         ),
                         SizedBox(height: 10),
                         TextButton.icon(

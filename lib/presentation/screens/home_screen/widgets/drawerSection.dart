@@ -38,7 +38,7 @@ class DrawerSection extends StatelessWidget {
               height: 90,
               width: 90,
             ),
-            title: Text("_ravuzz", style: TextStyle(fontSize: 20)),
+            title: Text("rahul", style: TextStyle(fontSize: 20)),
             subtitle: Padding(
               padding: const EdgeInsets.only(top: 2.0),
               child: Row(

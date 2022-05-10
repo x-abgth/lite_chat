@@ -26,7 +26,9 @@ class SplashScreen extends StatelessWidget {
                     Text(
                       'lite chat',
                       style: GoogleFonts.dancingScript(
-                          fontSize: 50, fontWeight: FontWeight.bold),
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                     LinearProgressIndicator(
                       backgroundColor: Color(0xFFB8B8B8).withOpacity(0.3),
